@@ -71,7 +71,7 @@ graph TD
         LB[Reverse Proxy / Gunicorn]
         
         subgraph Django_App
-            Ninja[API (Django Ninja)]
+            Ninja["API (Django Ninja)"]
             Views[Django Views]
             Models[ORM]
         end
@@ -83,7 +83,7 @@ graph TD
 
     subgraph Data_Layer
         Postgres[(PostgreSQL)]
-        Redis[(Redis - Broker/Cache)]
+        Redis[("Redis - Broker/Cache")]
         LLM[External AI API]
     end
 
