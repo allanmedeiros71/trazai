@@ -20,20 +20,20 @@ erDiagram
     CustomUser {
         string username
         string email
-        fk family_group_id
+        int family_group_id FK
     }
 
     ShoppingList {
         string name
-        fk family_group_id
+        int family_group_id FK
     }
 
     Item {
         string raw_name
         string clean_name
         boolean is_checked
-        fk shopping_list_id
-        fk category_id "Nullable"
+        int shopping_list_id FK
+        int category_id FK
     }
 
     Category {
@@ -43,8 +43,8 @@ erDiagram
     }
     
     ProductCache {
-        string term UK "Index"
-        fk predicted_category_id
+        string term UK
+        int predicted_category_id FK
         datetime created_at
     }
 ```

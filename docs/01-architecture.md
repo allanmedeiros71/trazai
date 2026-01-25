@@ -63,7 +63,7 @@ O sistema segue o padrão **Monolito Modular**, onde o código é centralizado e
 ```mermaid
 graph TD
     subgraph Clients
-        Web[Web Browser (HTMX)]
+        Web["Web Browser (HTMX)"]
         Alexa[Alexa Device]
     end
 
