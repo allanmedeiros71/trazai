@@ -8,9 +8,9 @@ Este documento define o plano de execução para o Produto Mínimo Viável (MVP)
 - [x] Inicializar repositório Git.
 - [x] Configurar `docker-compose.yml` (Django, Postgres, Redis).
 - [x] Criar projeto Django (`core`).
-- [ ] **Configurar `settings.py` com variáveis de ambiente (Decouple).**
+- [x] **Configurar `settings.py` com variáveis de ambiente (Decouple).**
 - [ ] Configurar conexão com Banco de Dados e testar migrações iniciais.
-- [ ] Configurar Celery e conexão com Redis.
+- [x] Configurar Celery e conexão com Redis.
 - [ ] Configurar estrutura de logs básica.
 
 ## Fase 2: Core Backend (Domínio) 🧱
