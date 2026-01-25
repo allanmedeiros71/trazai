@@ -9,9 +9,9 @@ Este documento define o plano de execução para o Produto Mínimo Viável (MVP)
 - [x] Configurar `docker-compose.yml` (Django, Postgres, Redis).
 - [x] Criar projeto Django (`core`).
 - [x] **Configurar `settings.py` com variáveis de ambiente (Decouple).**
-- [ ] Configurar conexão com Banco de Dados e testar migrações iniciais.
+- [x] Configurar conexão com Banco de Dados e testar migrações iniciais.
 - [x] Configurar Celery e conexão com Redis.
-- [ ] Configurar estrutura de logs básica.
+- [x] Configurar estrutura de logs básica.
 
 ## Fase 2: Core Backend (Domínio) 🧱
 *Objetivo: Implementar a lógica de negócios principal (Listas e Itens).*
