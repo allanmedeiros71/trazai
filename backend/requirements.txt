@@ -1,0 +1,9 @@
+Django>=5.0,<5.2
+django-ninja>=1.1.0
+psycopg2-binary>=2.9  # Driver Postgres
+celery>=5.3
+redis>=5.0
+python-decouple>=3.8  # Para gerenciar .env
+gunicorn>=21.2        # Para produção futura
+requests>=2.31        # Para chamar a API da OpenAI/Gemini
+django-cors-headers   # Útil se decidir separar o front no futuro
