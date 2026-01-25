@@ -59,9 +59,14 @@
 
 ## 6. Current Status (As of Jan 2026)
 
-- Infrastructure defined (`docker-compose.yml` created).
-- Project initiated (`django-admin startproject core`).
+- **Infrastructure:**
+  - `docker-compose.yml` configured and running (Web, Worker, DB, Redis).
+  - DB port 5432 exposed for external access.
+  - Environment variables set in `.env`.
+- **Backend Configuration:**
+  - `settings.py` updated with `python-decouple`, Database, Redis, Celery, and Logging configs.
+  - `celery.py` created and integrated.
+  - Initial Django migrations applied successfully.
 - **PENDING:**
-  - Configuration of `settings.py` for Database and Redis.
-  - Creation of `celery.py` configuration.
-  - Creation of the first app (`lists`).
+  - Creation of `accounts` and `lists` apps.
+  - Implementation of models and API endpoints.
