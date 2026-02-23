@@ -16,16 +16,16 @@ Este documento define o plano de execução para o Produto Mínimo Viável (MVP)
 ## Fase 2: Core Backend (Domínio) 🧱
 *Objetivo: Implementar a lógica de negócios principal (Listas e Itens).*
 
-- [ ] Criar app `accounts`:
-    - [ ] Model `FamilyGroup`.
-    - [ ] Model `CustomUser` estendendo AbstractUser.
-- [ ] Criar app `lists`:
-    - [ ] Models `ShoppingList`, `Category`, `Item`.
-    - [ ] Migrations e Admin do Django para testar modelos.
-- [ ] Criar API com **Django Ninja** (v1):
-    - [ ] Endpoint `GET /lists`: Listar listas do grupo.
-    - [ ] Endpoint `POST /lists/{id}/items`: Adicionar item.
-    - [ ] Endpoint `PATCH /items/{id}`: Marcar check/uncheck.
+- [x] Criar app `accounts`:
+    - [x] Model `FamilyGroup`.
+    - [x] Model `CustomUser` estendendo AbstractUser.
+- [x] Criar app `lists`:
+    - [x] Models `ShoppingList`, `Category`, `Item`.
+    - [x] Migrations e Admin do Django para testar modelos.
+- [x] Criar API com **Django Ninja** (v1):
+    - [x] Endpoint `GET /lists`: Listar listas do grupo.
+    - [x] Endpoint `POST /lists/{id}/items`: Adicionar item.
+    - [x] Endpoint `PATCH /items/{id}`: Marcar check/uncheck.
 
 ## Fase 3: Integração IA (Background Tasks) 🤖
 *Objetivo: Categorizar produtos automaticamente sem travar a UI.*
