@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Entrar{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mt-10 p-8">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Entrar no TrazAí</h2>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label for="id_username" class="block text-sm font-medium text-gray-700">Nome de usuário</label>
+            <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div>
+            <label for="id_password" class="block text-sm font-medium text-gray-700">Senha</label>
+            <input type="password" name="password" autocomplete="current-password" required id="id_password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        {% if form.errors %}
+            <p class="text-red-500 text-xs italic">Seu nome de usuário e senha não correspondem. Tente novamente.</p>
+        {% endif %}
+        <div>
+            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Entrar</button>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+    <p class="mt-4 text-center text-sm text-gray-600">
+        Não tem uma conta? <a href="{% url 'register' %}" class="font-medium text-indigo-600 hover:text-indigo-500">Cadastre-se</a>
+    </p>
+</div>
+{% endblock %}

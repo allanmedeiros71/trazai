@@ -1,0 +1,9 @@
+<ul role="list" class="divide-y divide-gray-200" id="items-container">
+    {% for item in items %}
+        {% include 'lists/partials/item_row.html' with item=item %}
+    {% empty %}
+        <li class="px-4 py-5 sm:px-6 text-center text-gray-500 italic" id="empty-message">
+            Sua lista está vazia. Adicione o primeiro item acima!
+        </li>
+    {% endfor %}
+</ul>

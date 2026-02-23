@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ shopping_list.name }}{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-gray-900">{{ shopping_list.name }}</h1>
+    <a href="{% url 'dashboard' %}" class="text-sm font-medium text-gray-500 hover:text-gray-900">&larr; Voltar para as Listas</a>
+</div>
+
+<!-- Add Item Form with HTMX -->
+<div class="bg-white shadow sm:rounded-lg mb-8 p-6">
+    <form hx-post="{% url 'add_item' shopping_list.id %}" 
+          hx-target="#items-container" 
+          hx-swap="beforeend" 
+          class="flex flex-col sm:flex-row gap-4 items-end"
+          _="on htmx:afterRequest reset() me">
+        {% csrf_token %}
+        <div class="w-full sm:flex-1">
+            <label for="name" class="block text-sm font-medium text-gray-700">Novo Item</label>
+            <input type="text" name="name" id="name" required class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 px-3 border" placeholder="Ex: Arroz">
+        </div>
+        <div class="w-full sm:w-32">
+            <label for="quantity" class="block text-sm font-medium text-gray-700">Qtd.</label>
+            <input type="text" name="quantity" id="quantity" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 px-3 border" placeholder="Ex: 5kg">
+        </div>
+        <button type="submit" class="w-full sm:w-auto mt-4 sm:mt-0 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Adicionar
+        </button>
+    </form>
+</div>
+
+<!-- Items List with HTMX Polling -->
+<div class="bg-white shadow sm:rounded-lg overflow-hidden">
+    <div class="px-4 py-5 sm:px-6 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Itens da Lista</h3>
+        <span class="text-xs text-gray-500 htmx-indicator">Sincronizando IA...</span>
+    </div>
+    
+    <!-- Polling Div to refresh categories from AI -->
+    <div id="items-list-wrapper" 
+         hx-get="{% url 'list_detail' shopping_list.id %}" 
+         hx-trigger="every 5s" 
+         hx-swap="innerHTML">
+        {% include 'lists/partials/item_list.html' %}
+    </div>
+</div>
+{% endblock %}

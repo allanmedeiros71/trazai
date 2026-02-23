@@ -40,16 +40,16 @@ Este documento define o plano de execução para o Produto Mínimo Viável (MVP)
 ## Fase 4: Frontend Básico (HTMX) 🖥️
 *Objetivo: Interface funcional para uso familiar.*
 
-- [ ] Configurar Templates Django Base + Tailwind CSS (via CDN ou build).
-- [ ] Tela de Login/Cadastro (Simples).
-- [ ] Dashboard (Listagem de Listas de Compras).
-- [ ] Detalhe da Lista:
-    - [ ] Input para adicionar item.
-    - [ ] Listagem de itens agrupados por Categoria.
-    - [ ] Implementar **HTMX** para:
-        - [ ] Adicionar item sem reload.
-        - [ ] Checkbox de item (Request PATCH).
-        - [ ] Polling simples (a cada 5s) para atualizar categorias vindas da IA.
+- [x] Configurar Templates Django Base + Tailwind CSS (via CDN ou build).
+- [x] Tela de Login/Cadastro (Simples).
+- [x] Dashboard (Listagem de Listas de Compras).
+- [x] Detalhe da Lista:
+    - [x] Input para adicionar item.
+    - [x] Listagem de itens agrupados por Categoria.
+    - [x] Implementar **HTMX** para:
+        - [x] Adicionar item sem reload.
+        - [x] Checkbox de item (Request PATCH).
+        - [x] Polling simples (a cada 5s) para atualizar categorias vindas da IA.
 
 ## Fase 5: Alexa Skill & Polimento 🗣️
 *Objetivo: Adicionar itens por voz.*

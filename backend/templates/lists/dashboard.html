@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="mb-8 flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-gray-900">Minhas Listas ({{ request.user.family_group.name }})</h1>
+</div>
+
+<!-- Form to Create New List -->
+<div class="bg-white shadow sm:rounded-lg mb-8">
+    <div class="px-4 py-5 sm:p-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Criar nova lista</h3>
+        <div class="mt-2 max-w-xl text-sm text-gray-500">
+            <p>Comece uma nova lista de compras para sua família.</p>
+        </div>
+        <form class="mt-5 sm:flex sm:items-center" method="POST">
+            {% csrf_token %}
+            <div class="w-full sm:max-w-xs">
+                <label for="name" class="sr-only">Nome da lista</label>
+                <input type="text" name="name" id="name" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 px-3 border" placeholder="Ex: Supermercado Central" required>
+            </div>
+            <button type="submit" class="mt-3 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                Criar
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Grid of Lists -->
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {% for lst in lists %}
+    <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-300">
+        <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-gray-900 truncate">
+                <a href="{% url 'list_detail' lst.id %}" class="hover:text-indigo-600">{{ lst.name }}</a>
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                Criada em {{ lst.created_at|date:"d/m/Y" }}
+            </p>
+            <div class="mt-4">
+                <a href="{% url 'list_detail' lst.id %}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">Ver Itens &rarr;</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full bg-white px-4 py-5 sm:p-6 shadow rounded-lg text-center text-gray-500">
+        Você ainda não tem nenhuma lista. Crie uma acima!
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
