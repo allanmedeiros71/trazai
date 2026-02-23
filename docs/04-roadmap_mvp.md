@@ -30,12 +30,12 @@ Este documento define o plano de execução para o Produto Mínimo Viável (MVP)
 ## Fase 3: Integração IA (Background Tasks) 🤖
 *Objetivo: Categorizar produtos automaticamente sem travar a UI.*
 
-- [ ] Model `ProductCache` no app `lists`.
-- [ ] Implementar Task Celery `categorize_item_task`:
-    - [ ] Lógica de verificação no Cache (DB).
-    - [ ] Integração com OpenAI/Gemini API (Prompt Engineering básico).
-    - [ ] Atualização do registro `Item` no banco.
-- [ ] Testar fluxo assíncrono (Adicionar item -> Task roda -> Item atualiza categoria).
+- [x] Model `ProductCache` no app `lists`.
+- [x] Implementar Task Celery `categorize_item_task`:
+    - [x] Lógica de verificação no Cache (DB).
+    - [x] Integração com OpenAI/Gemini API (Prompt Engineering básico).
+    - [x] Atualização do registro `Item` no banco.
+- [x] Testar fluxo assíncrono (Adicionar item -> Task roda -> Item atualiza categoria).
 
 ## Fase 4: Frontend Básico (HTMX) 🖥️
 *Objetivo: Interface funcional para uso familiar.*

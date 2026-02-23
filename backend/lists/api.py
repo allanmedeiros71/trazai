@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from .models import ShoppingList, Item
 from .schemas import ShoppingListSchema, ItemSchema, ItemCreateSchema, ItemUpdateSchema
 from typing import List
+from .tasks import categorize_item_task
 
 lists_router = Router(tags=["Lists"])
 items_router = Router(tags=["Items"])
@@ -27,6 +28,10 @@ def create_item(request, list_id: int, payload: ItemCreateSchema):
         quantity=payload.quantity,
         added_by=user
     )
+    
+    # Chama a task do Celery em background para categorizar o item
+    categorize_item_task.delay(item.id)
+    
     return item
 
 @items_router.patch("/{item_id}", response=ItemSchema)
