@@ -30,11 +30,9 @@ def categorize_item_task(item_id):
         print("Warning: No API key found for categorization. Returning.")
         return "No API key found."
 
-    valid_categories = [
-        "Hortifruti", "Açougue", "Peixaria", "Limpeza", "Laticínios", "Padaria",
-        "Bebidas", "Congelados", "Mercearia", "Higiene Pessoal",
-        "Pet Shop", "Frios", "Bebê", "Utilidades Domésticas", "Doces e Sobremesas", "Outros"
-    ]
+    valid_categories = list(Category.objects.values_list('name', flat=True))
+    if not valid_categories:
+        valid_categories = ["Outros"] # Fallback if db is completely empty
     categories_str = ", ".join(valid_categories)
 
     # Dummy categorization logic to be replaced with actual API call

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Gerenciar Categorias{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+    <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+        <div>
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Ordem das Categorias (Fluxo de Compras)
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                Arraste as categorias para alterar a ordem em que aparecem nas listas de compras.
+            </p>
+        </div>
+    </div>
+    
+    <div class="border-t border-gray-200 p-4">
+        <!-- Indicador de carregamento do HTMX -->
+        <span class="htmx-indicator text-sm text-indigo-600 mb-2 block">Salvando nova ordem...</span>
+        
+        <form id="sortable-form" hx-post="{% url 'reorder_categories' %}" hx-trigger="end" hx-target="#category-list">
+            <div id="category-list" class="sortable space-y-2">
+                {% include 'lists/partials/category_list.html' %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- SortableJS library for drag and drop -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+    htmx.onLoad(function(content) {
+        var sortables = content.querySelectorAll(".sortable");
+        for (var i = 0; i < sortables.length; i++) {
+            var sortable = sortables[i];
+            new Sortable(sortable, {
+                animation: 150,
+                ghostClass: 'bg-indigo-100',
+                handle: '.handle'
+            });
+        }
+    })
+</script>
+{% endblock %}

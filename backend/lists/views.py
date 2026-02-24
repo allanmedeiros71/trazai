@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import ShoppingList, Item
+from .models import ShoppingList, Item, Category
 from .tasks import categorize_item_task
 
 @login_required
@@ -26,7 +26,7 @@ def dashboard(request):
 @login_required
 def list_detail(request, pk):
     shopping_list = get_object_or_404(ShoppingList, pk=pk, family_group=request.user.family_group)
-    items = shopping_list.items.all().order_by('category__name', 'created_at')
+    items = shopping_list.items.all().order_by('category__order', 'category__name', 'created_at')
     
     # Render full page or just partial if it's HTMX request
     if request.headers.get('HX-Request') == 'true':
@@ -65,3 +65,18 @@ def toggle_item(request, item_id):
         return render(request, 'lists/partials/item_row.html', {'item': item})
     
     return redirect('list_detail', pk=item.shopping_list.id)
+
+@login_required
+def manage_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'lists/manage_categories.html', {'categories': categories})
+
+@login_required
+def reorder_categories(request):
+    if request.method == 'POST':
+        category_ids = request.POST.getlist('category')
+        for index, cat_id in enumerate(category_ids):
+            Category.objects.filter(id=cat_id).update(order=index + 1)
+        categories = Category.objects.all()
+        return render(request, 'lists/partials/category_list.html', {'categories': categories})
+    return redirect('manage_categories')

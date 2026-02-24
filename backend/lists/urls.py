@@ -6,4 +6,6 @@ urlpatterns = [
     path('lists/<int:pk>/', views.list_detail, name='list_detail'),
     path('lists/<int:pk>/add/', views.add_item, name='add_item'),
     path('items/<int:item_id>/toggle/', views.toggle_item, name='toggle_item'),
+    path('categories/', views.manage_categories, name='manage_categories'),
+    path('categories/reorder/', views.reorder_categories, name='reorder_categories'),
 ]

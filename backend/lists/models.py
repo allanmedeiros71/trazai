@@ -4,9 +4,11 @@ from accounts.models import FamilyGroup, CustomUser
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     icon = models.CharField(max_length=50, blank=True, null=True) # e.g., an emoji or icon name
+    order = models.IntegerField(default=0)
     
     class Meta:
         verbose_name_plural = 'Categories'
+        ordering = ['order', 'name']
 
     def __str__(self):
         return self.name
