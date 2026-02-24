@@ -30,6 +30,13 @@ def categorize_item_task(item_id):
         print("Warning: No API key found for categorization. Returning.")
         return "No API key found."
 
+    valid_categories = [
+        "Hortifruti", "Açougue", "Peixaria", "Limpeza", "Laticínios", "Padaria",
+        "Bebidas", "Congelados", "Mercearia", "Higiene Pessoal",
+        "Pet Shop", "Frios", "Bebê", "Utilidades Domésticas", "Doces e Sobremesas", "Outros"
+    ]
+    categories_str = ", ".join(valid_categories)
+
     # Dummy categorization logic to be replaced with actual API call
     # Here you'd use requests.post to OpenAI/Gemini API to get the category name.
     # For now, we'll try to find a category that matches vaguely or put in a default.
@@ -44,12 +51,15 @@ def categorize_item_task(item_id):
         data = {
             "model": "gpt-3.5-turbo",
             "messages": [
-                {"role": "system", "content": "You are a helpful assistant that categorizes supermarket items. Respond ONLY with the name of the category (e.g., 'Hortifruti', 'Açougue', 'Limpeza', 'Laticínios', 'Padaria')."},
-                {"role": "user", "content": f"Categorize the following item: {product_name}"}
+                {
+                    "role": "system", 
+                    "content": f"Você é um assistente que categoriza itens de supermercado. Responda APENAS com UMA das seguintes categorias: {categories_str}. Não adicione pontuação ou explicações."
+                },
+                {"role": "user", "content": f"Categorize o seguinte item: {product_name}"}
             ]
         }
         try:
-            response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=data, timeout=5)
+            response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=data, timeout=10)
             if response.status_code == 200:
                 result = response.json()
                 predicted_category_name = result['choices'][0]['message']['content'].strip()
@@ -61,14 +71,19 @@ def categorize_item_task(item_id):
         headers = {
             "Content-Type": "application/json"
         }
-        prompt = f"Você é um assistente que categoriza itens de supermercado. Responda APENAS com o nome da categoria (ex: 'Hortifruti', 'Açougue', 'Limpeza', 'Laticínios', 'Padaria'). Categorize o seguinte item: {product_name}"
+        prompt = (
+            f"Você é um assistente especialista em categorizar itens de supermercado. "
+            f"Classifique o item '{product_name}' escolhendo EXATAMENTE UMA das seguintes categorias: "
+            f"{categories_str}. "
+            f"Sua resposta deve conter apenas o nome da categoria escolhida, sem pontuação, sem aspas e sem texto adicional."
+        )
         data = {
             "contents": [{
                 "parts": [{"text": prompt}]
             }]
         }
         try:
-            response = requests.post(url, headers=headers, json=data, timeout=5)
+            response = requests.post(url, headers=headers, json=data, timeout=10)
             if response.status_code == 200:
                 result = response.json()
                 if 'candidates' in result and len(result['candidates']) > 0:
@@ -78,8 +93,18 @@ def categorize_item_task(item_id):
         except requests.RequestException as e:
             print(f"Request Exception: {e}")
 
+    # Normalize response
+    predicted_category_name = predicted_category_name.replace('"', '').replace("'", '').strip()
+    
+    # Try to match broadly with valid categories in case model adds prefixes
+    matched_category = "Outros"
+    for cat in valid_categories:
+        if cat.lower() in predicted_category_name.lower():
+            matched_category = cat
+            break
+            
     # Get or create the category
-    category, created = Category.objects.get_or_create(name=predicted_category_name)
+    category, created = Category.objects.get_or_create(name=matched_category)
 
     # Save to Cache
     ProductCache.objects.create(product_name=product_name, category=category)
